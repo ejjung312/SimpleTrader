@@ -10,12 +10,15 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
         {
             using(HttpClient client = new HttpClient())
             {
-                string uri = "https://financialmodelingprep.com/api/v3/" + GetUriSuffix(indexType);
+                //string uri = "https://financialmodelingprep.com/api/v3/" + GetUriSuffix(indexType);
+                string uri = "https://financialmodelingprep.com/api/v3/profile/AAPL";
 
                 HttpResponseMessage response = await client.GetAsync($"{uri}?apikey=OdRiKITrL4KfPyAQ0frGMGFi9F2sNWQ4");
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                MajorIndex majorIndex = JsonConvert.DeserializeObject<MajorIndex>(jsonResponse);
+                //MajorIndex majorIndex = JsonConvert.DeserializeObject<MajorIndex>(jsonResponse);
+                List<MajorIndex> temp = JsonConvert.DeserializeObject<List<MajorIndex>>(jsonResponse);
+                MajorIndex majorIndex = temp[0];
                 majorIndex.Type = indexType;
                 return majorIndex;
             }
