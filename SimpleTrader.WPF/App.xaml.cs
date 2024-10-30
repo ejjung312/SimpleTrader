@@ -1,6 +1,4 @@
 ﻿using SimpleTrader.WPF.ViewModels;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace SimpleTrader.WPF
