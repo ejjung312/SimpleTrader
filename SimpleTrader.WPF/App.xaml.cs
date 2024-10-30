@@ -1,4 +1,5 @@
-﻿using SimpleTrader.WPF.ViewModels;
+﻿using SimpleTrader.FinancialModelingPrepAPI.Services;
+using SimpleTrader.WPF.ViewModels;
 using System.Windows;
 
 namespace SimpleTrader.WPF
@@ -13,6 +14,8 @@ namespace SimpleTrader.WPF
             Window window = new MainWindow();
             window.DataContext = new MainViewModel();
             window.Show();
+
+            new StockPriceService().GetPrice("aaa");
 
             base.OnStartup(e);
         }
