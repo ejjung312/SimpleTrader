@@ -40,6 +40,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -62,6 +63,12 @@
                 Content="Buy"
                 IsChecked="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:BuyViewModel}}" />
             <RadioButton Grid.Column="3" Content="Sell" />
+            <RadioButton
+                Grid.Column="4"
+                Command="{Binding UpdateCurrentViewModelCommand}"
+                CommandParameter="{x:Static nav:ViewType.Login}"
+                Content="Login"
+                IsChecked="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:LoginViewModel}}" />
         </Grid>
     </Grid>
 </UserControl>
