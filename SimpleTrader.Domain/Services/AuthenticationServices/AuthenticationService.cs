@@ -19,6 +19,11 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
         {
             Account storedAccount = await _accountService.GetByUsername(username);
 
+            if (storedAccount == null)
+            {
+                throw new UserNotFoundException(username);
+            }
+
             PasswordVerificationResult passwordResult = _passwordHasher.VerifyHashedPassword(storedAccount.AccountHolder.PasswordHash, password);
 
             if (passwordResult != PasswordVerificationResult.Success)
@@ -29,28 +34,28 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
             return storedAccount;
         }
 
-        public async Task<RegisteractionResult> Register(string email, string username, string password, string confirmPassword)
+        public async Task<RegistrationResult> Register(string email, string username, string password, string confirmPassword)
         {
-            RegisteractionResult result = RegisteractionResult.Success;
+            RegistrationResult result = RegistrationResult.Success;
 
             if (password != confirmPassword)
             {
-                result = RegisteractionResult.PasswordDoNotMatch;
+                result = RegistrationResult.PasswordDoNotMatch;
             }
 
             Account emailAccount = await _accountService.GetByEmail(email);
             if (emailAccount != null)
             {
-                result = RegisteractionResult.EmailAlreadyExists;
+                result = RegistrationResult.EmailAlreadyExists;
             }
 
-            Account usernameAccount = await _accountService.GetByEmail(username);
+            Account usernameAccount = await _accountService.GetByUsername(username);
             if (usernameAccount != null)
             {
-                result = RegisteractionResult.UsernameAlreadyExists;
+                result = RegistrationResult.UsernameAlreadyExists;
             }
 
-            if (result == RegisteractionResult.Success)
+            if (result == RegistrationResult.Success)
             {
                 string hashedPassword = _passwordHasher.HashPassword(password);
 

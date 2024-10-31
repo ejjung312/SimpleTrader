@@ -2,7 +2,7 @@
 
 namespace SimpleTrader.Domain.Services.AuthenticationServices
 {
-    public enum RegisteractionResult
+    public enum RegistrationResult
     {
         Success,
         PasswordDoNotMatch,
@@ -12,7 +12,7 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
 
     public interface IAuthenticationService
     {
-        public Task<RegisteractionResult> Register(string email, string username, string password, string confirmPassword);
+        public Task<RegistrationResult> Register(string email, string username, string password, string confirmPassword);
 
         public Task<Account> Login(string username, string password);
     }
