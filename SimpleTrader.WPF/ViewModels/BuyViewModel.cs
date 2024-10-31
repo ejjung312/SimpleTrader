@@ -1,4 +1,5 @@
-﻿using SimpleTrader.Domain.Services;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using SimpleTrader.Domain.Services;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.WPF.Commands;
 using System.Windows.Input;
@@ -21,6 +22,21 @@ namespace SimpleTrader.WPF.ViewModels
 			}
 		}
 
+		private string _searchResultSymbol = string.Empty;
+		public string SearchResultSymbol
+        {
+			get
+			{
+				return _searchResultSymbol;
+			}
+			set
+			{
+				_searchResultSymbol = value;
+				OnPropertyChanged(nameof(SearchResultSymbol));
+				OnPropertyChanged(nameof(TotalPrice));
+			}
+		}
+
 		private double _stockPrice;
 		public double StockPrice
 		{
@@ -32,6 +48,7 @@ namespace SimpleTrader.WPF.ViewModels
 			{
 				_stockPrice = value;
 				OnPropertyChanged(nameof(StockPrice));
+				OnPropertyChanged(nameof(TotalPrice));
 			}
 		}
 
