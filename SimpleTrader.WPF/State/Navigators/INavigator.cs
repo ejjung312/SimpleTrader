@@ -1,5 +1,4 @@
 ﻿using SimpleTrader.WPF.ViewModels;
-using System.Windows.Input;
 
 namespace SimpleTrader.WPF.State.Navigators
 {
@@ -14,5 +13,6 @@ namespace SimpleTrader.WPF.State.Navigators
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
+        event Action StateChanged;
     }
 }

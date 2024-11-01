@@ -6,6 +6,8 @@ namespace SimpleTrader.WPF.State.Authenticators
     public interface IAuthenticator
     {
         Account CurrentAccount { get; }
+
+        event Action StateChanged;
         bool IsLoggedIn { get; }
 
         Task<RegistrationResult> Register(string email, string username, string password, string confirmPassword);
