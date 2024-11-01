@@ -81,7 +81,8 @@
                     <PasswordBox
                         x:Name="pbPassword"
                         Grid.Column="1"
-                        Margin="20,0,0,0" />
+                        Margin="20,0,0,0"
+                        Password="test123" />
                 </Grid>
 
                 <Button
