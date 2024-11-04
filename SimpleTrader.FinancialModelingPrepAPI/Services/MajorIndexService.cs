@@ -1,18 +1,23 @@
-﻿using Newtonsoft.Json;
-using SimpleTrader.Domain.Models;
+﻿using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
-using SimpleTrader.FinancialModelingPrepAPI.Results;
 
 namespace SimpleTrader.FinancialModelingPrepAPI.Services
 {
     public class MajorIndexService : IMajorIndexService
     {
+        private readonly FinancialModelingPrepHttpClientFactory _httpClientFactory;
+
+        public MajorIndexService(FinancialModelingPrepHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
         public async Task<MajorIndex> GetMajorIndex(MajorIndexType indexType)
         {
-            using(FinancialModelingPrepHttpClient client = new FinancialModelingPrepHttpClient())
+            using(FinancialModelingPrepHttpClient client = _httpClientFactory.CreateHttpClient())
             {
                 //string uri = "/profile/AAPL";
-                string uri = client.BaseAddress + "/profile/AAPL?apikey=OdRiKITrL4KfPyAQ0frGMGFi9F2sNWQ4";
+                string uri = client.BaseAddress + "/profile/AAPL";
 
                 List<MajorIndex> temp = await client.GetAsync<List<MajorIndex>>(uri);
                 MajorIndex majorIndex = temp[0];
