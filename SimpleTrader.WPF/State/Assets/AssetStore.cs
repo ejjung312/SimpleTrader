@@ -9,6 +9,8 @@ namespace SimpleTrader.WPF.State.Assets
 
         public double AccountBalance => _accountStore.CurrentAccount?.Balance ?? 0;
         public IEnumerable<AssetTransaction> AssetTransactions => _accountStore.CurrentAccount?.AssetTransactions ?? new List<AssetTransaction>();
+
+
         public event Action StateChanged;
 
         public AssetStore(IAccountStore accountStore)

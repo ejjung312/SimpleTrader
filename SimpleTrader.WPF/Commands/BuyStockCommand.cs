@@ -10,8 +10,6 @@ namespace SimpleTrader.WPF.Commands
 {
     public class BuyStockCommand : AsyncCommandBase
     {
-        public event EventHandler? CanExecuteChanged;
-
         private readonly BuyViewModel _buyViewModel;
         private readonly IBuyStockService _buyStockService;
         private readonly IAccountStore _accountStore;

@@ -33,7 +33,6 @@ namespace SimpleTrader.WPF.ViewModels
 			{
 				_searchResultSymbol = value;
 				OnPropertyChanged(nameof(SearchResultSymbol));
-				OnPropertyChanged(nameof(TotalPrice));
 			}
 		}
 

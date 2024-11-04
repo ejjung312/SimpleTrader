@@ -9,8 +9,6 @@ namespace SimpleTrader.WPF.Commands
         private readonly BuyViewModel _viewModel;
         private IStockPriceService _stockPriceService;
 
-        public event EventHandler? CanExecuteChanged;
-
         public SearchSymbolCommand(BuyViewModel viewModel, IStockPriceService stockPriceService)
         {
             _viewModel = viewModel;
@@ -22,6 +20,7 @@ namespace SimpleTrader.WPF.Commands
             try
             {
                 double stockPrice = await _stockPriceService.GetPrice(_viewModel.Symbol);
+
                 _viewModel.SearchResultSymbol = _viewModel.Symbol.ToUpper();
                 _viewModel.StockPrice = stockPrice;
             }

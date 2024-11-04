@@ -7,9 +7,6 @@ namespace SimpleTrader.WPF.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string s = value.ToString();
-            string s2 = parameter.ToString();
-
             return value.ToString() == parameter.ToString();
         }
 

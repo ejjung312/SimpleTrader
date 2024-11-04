@@ -10,7 +10,7 @@ namespace SimpleTrader.WPF.ViewModels
         private readonly ObservableCollection<AssetViewModel> _topAssets;
 
         public double AccountBalance => _assetStore.AccountBalance;
-        public IEnumerable<AssetViewModel> Assets => _topAssets;
+        public IEnumerable<AssetViewModel> TopAssets => _topAssets;
 
         public AssetSummaryViewModel(AssetStore assetStore)
         {

@@ -18,10 +18,10 @@ namespace SimpleTrader.WPF.Commands
             _renavigator = renavigator;
         }
 
-        public event EventHandler? CanExecuteChanged;
-
         public override async Task ExecuteAsync(object? parameter)
         {
+            _loginViewModel.ErrorMessage = string.Empty;
+
             try
             {
                 await _authenticator.Login(_loginViewModel.Username, parameter.ToString());
