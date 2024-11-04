@@ -9,13 +9,13 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid MaxWidth="1000" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Home" />
+        <controls:AssetSummary Grid.Row="0" DataContext="{Binding AssetSummaryViewModel}" />
 
         <controls:MajorIndexListing
             Grid.Row="1"
