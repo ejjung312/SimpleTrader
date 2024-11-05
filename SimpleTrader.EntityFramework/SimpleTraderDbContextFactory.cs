@@ -4,27 +4,27 @@ namespace SimpleTrader.EntityFramework
 {
     public class SimpleTraderDbContextFactory
     {
-        //private readonly string _connectionString;
-        private readonly Action<DbContextOptionsBuilder> _configureDbContext;
+        private readonly string _connectionString;
+        //private readonly Action<DbContextOptionsBuilder> _configureDbContext;
 
-        //public SimpleTraderDbContextFactory(string connectionString)
-        //{
-        //    _connectionString = connectionString;
-        //}
-
-        public SimpleTraderDbContextFactory(Action<DbContextOptionsBuilder> configureDbContext)
+        public SimpleTraderDbContextFactory(string connectionString)
         {
-            _configureDbContext = configureDbContext;
+            _connectionString = connectionString;
         }
+
+        //public SimpleTraderDbContextFactory(Action<DbContextOptionsBuilder> configureDbContext)
+        //{
+        //    _configureDbContext = configureDbContext;
+        //}
 
         public SimpleTraderDbContext CreateDbContext()
         {
             var options = new DbContextOptionsBuilder<SimpleTraderDbContext>();
 
-            _configureDbContext(options);
+            //_configureDbContext(options);
 
-            //options.UseMySql(_connectionString, MySqlServerVersion.AutoDetect(_connectionString),
-            //    b => b.MigrationsAssembly("SimpleTrader.EntityFramework"));
+            options.UseMySql(_connectionString, MySqlServerVersion.AutoDetect(_connectionString),
+                b => b.MigrationsAssembly("SimpleTrader.EntityFramework"));
 
             //options.UseSqlite(_connectionString);
 

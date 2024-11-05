@@ -17,7 +17,6 @@ using SimpleTrader.WPF.State.Authenticators;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
 using SimpleTrader.WPF.ViewModels.Factories;
-using System.Configuration;
 using System.Windows;
 
 namespace SimpleTrader.WPF
@@ -47,13 +46,14 @@ namespace SimpleTrader.WPF
                     string apiKey = context.Configuration.GetValue<string>("FINANCE_API_KEY");
                     services.AddSingleton<FinancialModelingPrepHttpClientFactory>(new FinancialModelingPrepHttpClientFactory(apiKey));
 
-                    string connectionString = context.Configuration.GetConnectionString("sqlite");
-                    //string connectionString = context.Configuration.GetConnectionString("default");
-                    //services.AddDbContext<SimpleTraderDbContext>(o => o.UseMySql(connectionString, MySqlServerVersion.AutoDetect(connectionString),
-                    //                                            b => b.MigrationsAssembly("SimpleTrader.EntityFramework")));
-                    Action<DbContextOptionsBuilder> configureDbContext = o => o.UseSqlite(connectionString);
-                    services.AddDbContext<SimpleTraderDbContext>(configureDbContext);
-                    services.AddSingleton<SimpleTraderDbContextFactory>(new SimpleTraderDbContextFactory(configureDbContext));
+                    //string connectionString = context.Configuration.GetConnectionString("sqlite");
+                    string connectionString = context.Configuration.GetConnectionString("default");
+                    services.AddDbContext<SimpleTraderDbContext>(o => o.UseMySql(connectionString, MySqlServerVersion.AutoDetect(connectionString),
+                                                                b => b.MigrationsAssembly("SimpleTrader.EntityFramework")));
+                    services.AddSingleton<SimpleTraderDbContextFactory>(new SimpleTraderDbContextFactory(connectionString));
+                    //Action<DbContextOptionsBuilder> configureDbContext = o => o.UseSqlite(connectionString);
+                    //services.AddDbContext<SimpleTraderDbContext>(configureDbContext);
+                    //services.AddSingleton<SimpleTraderDbContextFactory>(new SimpleTraderDbContextFactory(configureDbContext));
                     services.AddSingleton<IAuthenticationService, AuthenticationService>();
                     services.AddSingleton<IDataService<Account>, AccountDataService>();
                     services.AddSingleton<IAccountService, AccountDataService>();
@@ -66,6 +66,7 @@ namespace SimpleTrader.WPF
 
                     services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
                     services.AddSingleton<BuyViewModel>();
+                    services.AddSingleton<SellViewModel>();
                     services.AddSingleton<PortfolioViewModel>();
                     services.AddSingleton<AssetSummaryViewModel>();
                     services.AddSingleton<HomeViewModel>(services => new HomeViewModel(
@@ -81,6 +82,11 @@ namespace SimpleTrader.WPF
                     services.AddSingleton<CreateViewModel<BuyViewModel>>(services =>
                     {
                         return () => services.GetRequiredService<BuyViewModel>();
+                    });
+
+                    services.AddSingleton<CreateViewModel<SellViewModel>>(services =>
+                    {
+                        return () => services.GetRequiredService<SellViewModel>();
                     });
 
                     services.AddSingleton<CreateViewModel<PortfolioViewModel>>(services =>
@@ -122,11 +128,11 @@ namespace SimpleTrader.WPF
         {
             _host.Start();
 
-            SimpleTraderDbContextFactory contextFactory = _host.Services.GetRequiredService<SimpleTraderDbContextFactory>();
-            using(SimpleTraderDbContext context = contextFactory.CreateDbContext())
-            {
-                context.Database.Migrate();
-            }
+            //SimpleTraderDbContextFactory contextFactory = _host.Services.GetRequiredService<SimpleTraderDbContextFactory>();
+            //using(SimpleTraderDbContext context = contextFactory.CreateDbContext())
+            //{
+            //    context.Database.Migrate();
+            //}
 
             Window window = _host.Services.GetRequiredService<MainWindow>();
             window.Show();
