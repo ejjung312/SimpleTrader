@@ -10,5 +10,13 @@
             AssetSummaryViewModel = assetSummaryViewModel;
             MajorIndexListingViewModel = majorIndexListingViewModel;
         }
+
+        public override void Dispose()
+        {
+            AssetSummaryViewModel.Dispose();
+            MajorIndexListingViewModel.Dispose();
+
+            base.Dispose();
+        }
     }
 }

@@ -14,13 +14,12 @@ namespace SimpleTrader.WPF.HostBuilders
         {
             host.ConfigureServices(services =>
             {
-                services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
-                services.AddSingleton<BuyViewModel>();
-                services.AddSingleton<SellViewModel>();
-                services.AddSingleton<PortfolioViewModel>();
-                services.AddSingleton<AssetSummaryViewModel>();
-                services.AddSingleton<HomeViewModel>(CreateHomeViewModel);
-                services.AddSingleton<MainViewModel>();
+                services.AddTransient(CreateHomeViewModel);
+                services.AddTransient<PortfolioViewModel>();
+                services.AddTransient<BuyViewModel>();
+                services.AddTransient<SellViewModel>();
+                services.AddTransient<AssetSummaryViewModel>();
+                services.AddTransient<MainViewModel>();
 
                 services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => services.GetRequiredService<HomeViewModel>());
 
@@ -30,6 +29,8 @@ namespace SimpleTrader.WPF.HostBuilders
                 services.AddSingleton<CreateViewModel<PortfolioViewModel>>(services => () => services.GetRequiredService<PortfolioViewModel>());
                 services.AddSingleton<ViewModelDelegateRenavigator<LoginViewModel>>();
                 services.AddSingleton<CreateViewModel<RegisterViewModel>>(services => () => CreateRegisterViewModel(services));
+
+                services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
 
                 services.AddSingleton<ViewModelDelegateRenavigator<HomeViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<RegisterViewModel>>();
@@ -42,9 +43,8 @@ namespace SimpleTrader.WPF.HostBuilders
         private static HomeViewModel CreateHomeViewModel(IServiceProvider services)
         {
             return new HomeViewModel(
-                    services.GetRequiredService<AssetSummaryViewModel>(),
-                        MajorIndexListingViewModel.LoadMajorIndexViewModel(
-                            services.GetRequiredService<IMajorIndexService>()));
+                services.GetRequiredService<AssetSummaryViewModel>(),
+                MajorIndexListingViewModel.LoadMajorIndexViewModel(services.GetRequiredService<IMajorIndexService>()));
         }
 
         private static LoginViewModel CreateLoginViewModel(IServiceProvider services)
