@@ -13,6 +13,21 @@ namespace SimpleTrader.WPF.Commands
         {
             _viewModel = viewModel;
             _stockPriceService = stockPriceService;
+
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _viewModel.CanSearchSymbol && base.CanExecute(parameter);
+        }
+
+        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ISearchSymbolViewModel.CanSearchSymbol))
+            {
+                OnCanExecuteChange();
+            }
         }
 
         public override async Task ExecuteAsync(object? parameter)

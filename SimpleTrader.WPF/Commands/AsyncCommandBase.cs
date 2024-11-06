@@ -14,12 +14,18 @@ namespace SimpleTrader.WPF.Commands
             set
             {
                 _isExecuting = value;
-                CanExecuteChanged?.Invoke(this, new EventArgs());
+                OnCanExecuteChange();
             }
         }
+
+        protected void OnCanExecuteChange()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
+
         public event EventHandler? CanExecuteChanged;
 
-        public bool CanExecute(object? parameter)
+        public virtual bool CanExecute(object? parameter)
         {
             return !IsExecuting;
         }

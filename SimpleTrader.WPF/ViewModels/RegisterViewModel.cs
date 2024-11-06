@@ -32,7 +32,8 @@ namespace SimpleTrader.WPF.ViewModels
 			{
 				_username = value;
 				OnPropertyChanged(nameof(Username));
-			}
+                OnPropertyChanged(nameof(CanRegister));
+            }
 		}
 
 		private string _password;
@@ -46,7 +47,8 @@ namespace SimpleTrader.WPF.ViewModels
 			{
 				_password = value;
 				OnPropertyChanged(nameof(Password));
-			}
+                OnPropertyChanged(nameof(CanRegister));
+            }
 		}
 
 		private string _confirmPassword;
@@ -60,8 +62,14 @@ namespace SimpleTrader.WPF.ViewModels
 			{
 				_confirmPassword = value;
 				OnPropertyChanged(nameof(ConfirmPassword));
+				OnPropertyChanged(nameof(CanRegister));
 			}
 		}
+
+		public bool CanRegister => !string.IsNullOrEmpty(Email) &&
+			!string.IsNullOrEmpty(Username) &&
+			!string.IsNullOrEmpty(Password) &&
+			!string.IsNullOrEmpty(ConfirmPassword);
 
 		public ICommand RegisterCommand { get; }
 

@@ -16,6 +16,21 @@ namespace SimpleTrader.WPF.Commands
             _registerViewModel = registerViewModel;
             _authenticator = authenticator;
             _registerRenavigator = registerRenavigator;
+
+            _registerViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _registerViewModel.CanRegister && base.CanExecute(parameter);
+        }
+
+        private void RegisterViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(RegisterViewModel.CanRegister))
+            {
+                OnCanExecuteChange();
+            }
         }
 
         public override async Task ExecuteAsync(object? parameter)
